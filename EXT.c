@@ -1,0 +1,95 @@
+/*
+ * EXT.c
+ *
+ * Created: 10/2/2022 5:16:10 PM
+ *  Author: gehad
+ */ 
+
+#include "EXT_Cfg.h"
+#include "EXT.h"
+void Set_GlobalInterrupt(void)
+{
+	#if     GLOBAL_INTERRUPT  ==  GLOBAL_INTERRUPT_ENABLE
+	
+	SET_BIT(SREG, 7);
+	
+	
+	#elif   GLOBAL_INTERRUPT  ==  GLOBAL_INTERRUPT_DISABLE
+	CLEAR_BIT(SREG, 7);
+	
+	#endif
+}
+
+void ExternalINT0_Init(void)
+{
+	Set_GlobalInterrupt();
+	SET_BIT(GICR,EXTERNAL_INT0);
+	
+	#if      EXTERNAL_INT0_TRIGGER  == INT0_TRIGGER_RISING_EDGE
+	
+	SET_BIT(MCUCR,0);
+	SET_BIT(MCUCR,1);
+	
+	#elif    EXTERNAL_INT0_TRIGGER  == INT0_TRIGGER_FALLING_EDGE
+	
+	CLEAR_BIT(MCUCR,0);
+	SET_BIT(MCUCR,1);
+	
+	#elif    EXTERNAL_INT0_TRIGGER  == INT0_TRIGGER_ANY_LOGGICAL_CHANGE
+	
+	SET_BIT(MCUCR,0);
+	CLEAR_BIT(MCUCR,1);
+
+	#elif    EXTERNAL_INT0_TRIGGER  == INT0_TRIGGER_LOW_LEVEL
+	
+	CLEAR_BIT(MCUCR,0);
+	CLEAR_BIT(MCUCR,1);
+	#endif
+	
+}
+
+void ExternalINT1_Init(void)
+{
+	Set_GlobalInterrupt();
+	SET_BIT(GICR,EXTERNAL_INT1);
+	
+	#if      EXTERNAL_INT1_TRIGGER  == INT1_TRIGGER_RISING_EDGE
+	
+	SET_BIT(MCUCR,2);
+	SET_BIT(MCUCR,3);
+	
+	#elif    EXTERNAL_INT1_TRIGGER  == INT1_TRIGGER_FALLING_EDGE
+	
+	CLEAR_BIT(MCUCR,2);
+	SET_BIT(MCUCR,3);
+	
+	#elif    EXTERNAL_INT1_TRIGGER  == INT1_TRIGGER_ANY_LOGGICAL_CHANGE
+	
+	SET_BIT(MCUCR,2);
+	CLEAR_BIT(MCUCR,3);
+
+	#elif    EXTERNAL_INT1_TRIGGER  == INT1_TRIGGER_LOW_LEVEL
+	
+	CLEAR_BIT(MCUCR,2);
+	CLEAR_BIT(MCUCR,3);
+	
+	#endif
+	
+}
+
+void ExternalINT2_Init(void)
+{
+	Set_GlobalInterrupt();
+	SET_BIT(GICR,EXTERNAL_INT2);
+	
+	#if      EXTERNAL_INT2_TRIGGER  == INT2_TRIGGER_RISING_EDGE
+	
+	SET_BIT(MCUCSR,6);
+	
+	#elif    EXTERNAL_INT2_TRIGGER  == INT2_TRIGGER_FALLING_EDGE
+	
+	CLEAR_BIT(MCUCSR,6);
+	
+	#endif
+	
+}
